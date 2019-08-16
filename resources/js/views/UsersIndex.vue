@@ -14,9 +14,10 @@
         </div>
 
         <ul v-if="users">
-            <li v-for="{ name, email } in users">
+            <li v-for="{ id, name, email } in users">
                 <strong>Name:</strong> {{ name }},
-                <strong>Email:</strong> {{ email }}
+                <strong>Email:</strong> {{ email }} | 
+                <router-link :to="{ name: 'users.edit', params: { id } }">Edit</router-link>
             </li>
         </ul>
         <div class="pagination">
@@ -84,8 +85,6 @@ export default {
             next(vm => vm.setData(err, data));
         });
     },
-    // when route changes and this component is already rendered,
-    // the logic will be slightly different.
     beforeRouteUpdate (to, from, next) {
         this.users = this.links = this.meta = null
         getUsers(to.query.page, (err, data) => {
