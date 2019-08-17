@@ -12,9 +12,10 @@
             <input id="user_email" v-model="user.email" style="width:300px;"/>
         </div>
         <div class="form-group">
-            <button type="submit">Update</button>
+            <button type="submit" :disabled="saving">Update</button>
         </div><br>
         <button @click="$router.go(-1)">Cancel</button>
+        <button :disabled="saving" @click.prevent="onDelete($event)">Delete</button>
 
     </form>
   </div>
@@ -51,14 +52,25 @@ export default {
         this.message = 'error, please check fields';
         setTimeout(() => this.message = null, 3000);
         this.saving = false;});
-        }
+        },
+      onDelete(event){
+        this.saving = true;
+
+        api.delete(this.user.id)
+           .then((response) => {
+            this.$router.push({ name: 'users.index' })
+           });
+      },
   },
   created() {
   api.find(this.$route.params.id).then((response) => {
     setTimeout(() => {
     this.loaded = true;
     this.user = response.data.data;},200);
-  });
+  })     
+  .catch((err) => {
+       this.$router.push({ name: '404' });
+     });
   }
 };
 </script>
