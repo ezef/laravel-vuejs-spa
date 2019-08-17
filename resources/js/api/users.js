@@ -7,6 +7,9 @@ export default {
     find(id) {
         return axios.get(`/api/users/${id}`);
     },
+	post(data) {
+        return axios.post(`/api/users`, data);
+    },
     update(id, data) {
         return axios.put(`/api/users/${id}`, data);
     },

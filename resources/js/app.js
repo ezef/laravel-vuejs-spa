@@ -9,6 +9,7 @@ import Home from './views/Home'
 import UsersIndex from './views/UsersIndex'
 import UsersEdit from './views/UsersEdit'
 import NotFound from './views/NotFound'
+import UsersNew from './views/UsersNew'
 
 
 const router = new VueRouter({
@@ -36,6 +37,11 @@ const router = new VueRouter({
         },
         { path: '/404', name: '404', component: NotFound },
 		{ path: '*', redirect: '/404' },
+			    {
+            path: '/users/create',
+	        name: 'users.create',
+	        component: UsersNew,
+	    },
     ],
 });
 
